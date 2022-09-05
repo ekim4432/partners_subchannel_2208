@@ -1,0 +1,19 @@
+SELECT substr(P.pubDate,1,10) 개시일, P.category, N.category as newcategory				
+, CASE WHEN P.TITLE REGEXP '일진|유부남|외도|순위|소개팅|상남자식|남성|찐따|한녀|가스라이팅|키작|가족|신부|남학생|연락|처녀|고백|왁싱|예비|유부녀|사랑|여동생|로맨스|속궁합|전남친|남동생|여초|ㅇㅍ|군대|동생|솔로|20대|아이|아빠|아기|후회|화상|부부|				
+				
+	   WHEN P.TITLE REGEXP '과외|선생|네고|월급|퇴사|사장|회식|의사|아르바이트생|카페|시술|고객|공무원|점장|컴퍼니|직원|편의점|아르바이트|직장|기업|학생|회사원|신입' THEN '직장&알바&학생'			
+	   WHEN P.TITLE REGEXP '대처법|프로세스|차이|특성|방법|생각|이유|인기|이상|의외|최고' THEN '궁금'			
+	   WHEN P.TITLE REGEXP '리뷰|상황|일상|요즘|현실|근황|후기|공개' THEN '근황'			
+       WHEN P.TITLE REGEXP '대참사|사기|소름돋|ㄷㄷㄷ|소름|순간|논란|ㄷㄷ|사건|레전드|사고|충격|경찰|역대급|발견|살해' THEN '사건사고'				
+	   WHEN P.TITLE REGEXP '디시인사이드|배달|디씨인|당근마켓|블라인드|당근|카카오톡|인스타그램|스압' THEN '커뮤니티'			
+	   WHEN P.TITLE REGEXP '세계|아베|일본|미국|중국' THEN '해외'			
+	   WHEN P.TITLE REGEXP '한국사람|대한민국|우리나라' THEN '한국'			
+	   WHEN P.TITLE REGEXP '영화|사진|카툰|드라마|배우|스포|아이돌|예능' THEN '콘텐츠'			
+	   WHEN P.TITLE REGEXP 'mp4|gif|움짤|avi|영상' THEN '움짤'			
+       ELSE '이외' END AS 서브채널명				
+       ,P.author, P.nid, P.title AS 제목				
+FROM   picNews P inner join tbContentsInfo N on P.nid = N.nid				
+WHERE  1=1				
+AND    P.nid >='2022081500000000000' -- 문자로 인식				
+AND    substr(P.pubDate,1,8)<= '20220821'				
+AND    N.category	in ('CA0517', 'CA0518')			
